@@ -69,6 +69,51 @@ def tinyMazeSearch(problem):
   return  [s,s,w,s,w,w,s,w]
 
 
+def depthFirstSearch(problem):
+  """
+  Search the deepest nodes in the search tree first [p 74].
+  
+  Your search algorithm needs to return a list of actions that reaches
+  the goal.  Make sure to implement a graph search algorithm [Fig. 3.18].
+  
+  To get started, you might want to try some of these simple commands to
+  understand the search problem that is being passed in:
+  
+  print "Start:", problem.getStartState()
+  print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+  print "Start's successors:", problem.getSuccessors(problem.getStartState())
+  """
+  return frontierSearch(problem, util.Stack())
+
+
+def breadthFirstSearch(problem):
+  "Search the shallowest nodes in the search tree first. [p 74]"
+
+  return frontierSearch(problem, util.Queue())
+
+
+def uniformCostSearch(problem):
+  "Search the node of least total cost first. "
+
+  return frontierSearchWithCost(problem, util.PriorityQueue(), nullHeuristic)
+
+def nullHeuristic(state, problem=None):
+  """
+  A heuristic function estimates the cost from the current state to the nearest
+  goal in the provided SearchProblem.  This heuristic is trivial.
+  """
+  return 0
+
+def aStarSearch(problem, heuristic=nullHeuristic):
+  "Search the node that has the lowest combined cost and heuristic first."
+
+  return frontierSearchWithCost(problem, util.PriorityQueue(), heuristic)
+    
+
+#print "Start:", problem.getStartState()                                             #  (5, 5)
+#print "Is the start a goal?", problem.isGoalState(problem.getStartState())          # False
+#print "Start's successors:", problem.getSuccessors(problem.getStartState())         # [((5, 4), 'South', 1), ((4, 5), 'West', 1)]
+#print "Start's successors cost:", problem.getCostOfActions([game.Directions.WEST])  # 1
 def frontierSearch(problem, frontier):
   start_node = problem.getStartState()
   if problem.isGoalState(start_node):
@@ -96,15 +141,8 @@ def frontierSearch(problem, frontier):
         frontier.push(successor[0])
         frontier_set.add(successor[0])
 
-def nullHeuristic(state, problem=None):
-  """
-  A heuristic function estimates the cost from the current state to the nearest
-  goal in the provided SearchProblem.  This heuristic is trivial.
-  """
-  return 0
 
-
-def frontierSearchWithCost(problem, frontier, heuristic=nullHeuristic):
+def frontierSearchWithCost(problem, frontier, heuristic):
   start_node = problem.getStartState()
   if problem.isGoalState(start_node):
     return []
@@ -154,69 +192,6 @@ def buildActionsList(node_discovery_dict, final_node):
   return actions_list
 
 
-def depthFirstSearch(problem):
-  """
-  Search the deepest nodes in the search tree first [p 74].
-  
-  Your search algorithm needs to return a list of actions that reaches
-  the goal.  Make sure to implement a graph search algorithm [Fig. 3.18].
-  
-  To get started, you might want to try some of these simple commands to
-  understand the search problem that is being passed in:
-  
-  print "Start:", problem.getStartState()
-  print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-  print "Start's successors:", problem.getSuccessors(problem.getStartState())
-  """
-
-  #print "Start:", problem.getStartState()                                             #  (5, 5)
-  #print "Is the start a goal?", problem.isGoalState(problem.getStartState())          # False
-  #print "Start's successors:", problem.getSuccessors(problem.getStartState())         # [((5, 4), 'South', 1), ((4, 5), 'West', 1)]
-  #print "Start's successors cost:", problem.getCostOfActions([game.Directions.WEST])  # 1
-
-  return frontierSearch(problem, util.Stack())
-
-
-def depthFirstSearch_aux(node, problem, explored, result_actions):
-  explored.add(str(node))
-
-  if problem.isGoalState(node):
-    return result_actions
-
-  for successor in problem.getSuccessors(node):
-    if str(successor[0]) not in explored:
-      child = successor[0]
-      res = depthFirstSearch_aux(child, problem, explored, [successor[1]])
-      if len(res) > 0:
-        return result_actions + res
-
-  return []
-
-
-def breadthFirstSearch(problem):
-  "Search the shallowest nodes in the search tree first. [p 74]"
-
-  return frontierSearch(problem, util.Queue())
-
-
-def uniformCostSearch(problem):
-  "Search the node of least total cost first. "
-
-  return frontierSearchWithCost(problem, util.PriorityQueue())
-
-#def nullHeuristic(state, problem=None):
-  """
-  A heuristic function estimates the cost from the current state to the nearest
-  goal in the provided SearchProblem.  This heuristic is trivial.
-  """
-#  return 0
-
-def aStarSearch(problem, heuristic=nullHeuristic):
-  "Search the node that has the lowest combined cost and heuristic first."
-
-  return frontierSearchWithCost(problem, util.PriorityQueue(), heuristic)
-    
-  
 # Abbreviations
 bfs = breadthFirstSearch
 dfs = depthFirstSearch
