@@ -347,8 +347,8 @@ def cornersHeuristic(state, problem):
   this heuristic to receive full credit.)
   """
 
-  corners = problem.corners # These are the corner coordinates
-  walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
+  #corners = problem.corners # These are the corner coordinates
+  #walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
   currLocation = state[0]
   cornersToVisit = list(state[1])
@@ -459,7 +459,14 @@ def foodHeuristic(state, problem):
   """
   position, foodGrid = state
   "*** YOUR CODE HERE ***"
-  return 0
+
+  #  use cornersHeuristic - set food points as corners and the heuristic will do the rest
+  '''cornersHeuristic: 
+  currLocation = state[0]
+  cornersToVisit = list(state[1])'''
+
+  cornersHeuristicState = (position, tuple(foodGrid.asList()))
+  return cornersHeuristic(cornersHeuristicState, problem)
   
 class ClosestDotSearchAgent(SearchAgent):
   "Search for all food using a sequence of searches"
@@ -487,8 +494,9 @@ class ClosestDotSearchAgent(SearchAgent):
     problem = AnyFoodSearchProblem(gameState)
 
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
-  
+    return search.aStarSearch(problem)
+
+
 class AnyFoodSearchProblem(PositionSearchProblem):
   """
     A search problem for finding a path to any food.
@@ -523,7 +531,8 @@ class AnyFoodSearchProblem(PositionSearchProblem):
     x,y = state
     
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    return self.food[x][y]
+
 
 ##################
 # Mini-contest 1 #
