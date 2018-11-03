@@ -114,21 +114,21 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 #print "Is the start a goal?", problem.isGoalState(problem.getStartState())          # False
 #print "Start's successors:", problem.getSuccessors(problem.getStartState())         # [((5, 4), 'South', 1), ((4, 5), 'West', 1)]
 #print "Start's successors cost:", problem.getCostOfActions([game.Directions.WEST])  # 1
-def frontierSearch(problem, frontier):
+def frontierSearch(problem, frontierDS):
   start_node = problem.getStartState()
   if problem.isGoalState(start_node):
     return []
 
-  frontier.push(start_node)
+  frontierDS.push(start_node)
   frontier_set = {start_node}  # !! non empty set initialization
   explored = set()             # !! empty set initialization
   node_discovery_dict = {}  # (5, 4) -> ('South', (5, 5))  //(5, 4) was reached by going South from (5, 5)
 
   while True:
-    if frontier.isEmpty():
+    if frontierDS.isEmpty():
       return [game.Directions.STOP]
 
-    node = frontier.pop()
+    node = frontierDS.pop()
     frontier_set.remove(node)
 
     explored.add(node)
@@ -138,7 +138,7 @@ def frontierSearch(problem, frontier):
         node_discovery_dict[successor[0]] = (successor[1], node)
         if problem.isGoalState(successor[0]):
           return buildActionsList(node_discovery_dict, successor[0])
-        frontier.push(successor[0])
+        frontierDS.push(successor[0])
         frontier_set.add(successor[0])
 
 
@@ -151,6 +151,7 @@ def frontierSearchWithCost(problem, frontier, heuristic):
   frontier_set = {start_node}  # !! non empty set initialization
   explored = set()             # !! empty set initialization
   # node_discovery_dict: (5, 4) -> ('South', (5, 5), cost)  //(5, 4) was reached by going South from (5, 5) with cost from start_node
+  # (node) -> (action from parent, parent, cost from start_node)
   node_discovery_dict = {start_node: (None, None, 0)}
 
   while True:

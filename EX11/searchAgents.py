@@ -358,11 +358,15 @@ def cornersHeuristic(state, problem):
   #  calculate the cost of travelling from current location to nearest corner
   while cornersToVisit:
     distDict = {}
+
+    # calculate for currLocation the Manhattan Distance to each corner from corners-left-to-visit
     for cor in cornersToVisit:
       distDict[util.manhattanDistance(currLocation, cor)] = cor
 
+    # choose the nearest corner as the next destination
     distanceToNextCorner = min(distDict.keys())
     nextCorner = distDict[distanceToNextCorner]
+
     heuristic += distanceToNextCorner
     currLocation = nextCorner
     cornersToVisit.remove(nextCorner)
