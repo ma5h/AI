@@ -1,0 +1,49 @@
+
+Question 3:
+===========
+
+A.
+Problem states:
+NxN Board with the placement:
+
+         | 2    Knight is placed
+B(ij) =  | 1    Attacked position (no knights allowed)
+         | 0    Empty position
+
+Initial state:
+Empty board, where for each i<=N, j<=N: B(i, j) = 0
+
+Actions:
+Place knight in an empty position
+
+Transition model:
+Place knight in an empty position (set position with 2) and recalculate the attacked positions due to the change (set
+positions with 1)
+
+Goal test:
+All position are either with knights or attacked, where for each i<=N, j<=N: B(i, j) != 0
+
+B.
+A knight placed in a white cell will threaten only black cells and a knight placed in a black cell will threaten
+only white cells. Therefore a board where all black cells have knight or a where all white cells have knight is a
+valid setup.
+
+When N is even there are (N^2)/2 white cells and (N^2)/2 black cells
+When N is odd there are (N^2)/2 white cells and 1+(N^2)/2 black cells
+
+Therefore there is always a setting of white or black cells that their number is ⎾(N^2)/2⏋, and on these cells the
+knights will be placed.
+
+C.
+
+    |-------------------|
+    |   |   | ♞ |   |   |
+    |   | ♞ | ♞ | ♞ |   |
+    |   |   | ♞ |   |   |
+    |   |   |   |   |   |
+    | ♞ |   | ♞ |   | ♞ |
+    |-------------------|
+
+On this 5x5 board configuration there are 8 knight. For this board, as shown in part B, we can place at least 13
+knights, therefore this is not a global maximum state.
+Movement of each single knight will put it in an attack state so this is a local maximum state.

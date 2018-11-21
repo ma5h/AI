@@ -1,0 +1,193 @@
+
+Question 4: Genetic algorithm
+=============================
+To solve this problem I wrote a Genetic algorithm that contains:
+* DNA class - Holds a list of size 10, each entry holds 0 for the summation group or 1 for the multiplication group.
+              This class also implements the crossover, mutation and fitness methods.
+              In the crossover method choose a random number from 1-10 and cut the parent DNA's at that location and
+              reconstructed them, for example:
+              parentA = [1, 1, 0, 1, 1, 0, 0, 1, 0, 0]
+              parentB = [1, 1, 1, 1, 1, 0, 0, 0, 1, 0]
+              chosen number = 4
+              therefore:
+              child = parentA[:4] + parentB[4:] = [1, 1, 0, 1, 1, 0, 0, 0, 1, 0]
+
+              In the mutation method for each entry, in a rate of 5%, choose if to mutate or not. If mutation was chosen
+              then randomly choose if entry if in group 0 or 1.
+
+              The fitness value considers
+                - The sizes of the two groups when points are added only if they are equal
+                - The distance of the summation group from 36
+                - The distance of the multiplication group from 360
+
+        fitness_size_value = 200 if len(group_0) == len(group_1) else 0
+        fitness_sum_value = (36 - abs(36 - group_0_sum)) * 60
+        fitness_mul_value = 360 - abs(360 - group_1_mul)
+        fitness_value = fitness_size_value + fitness_sum_value + fitness_mul_value
+
+* Population class - Holds a max heap sorted by fitness of 20 to 100 DNA's (I experimented with different values),
+                     generates same amount of children and chooses the fittest for the next generation
+
+* Main method - Runs for 50 generations
+
+Results:
+        Summation group      : [2, 7, 8, 9, 10]
+        Multiplication group : [1, 3, 4, 5, 6]
+
+Iteration examples:
+population = 20
+iteration: 49, Result: [0, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 37, group_0: [1, 2, 7, 8, 9, 10], group_1_mul: 360, group_1: [3, 4, 5, 6]
+iteration: 48, Result: [0, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 37, group_0: [1, 2, 7, 8, 9, 10], group_1_mul: 360, group_1: [3, 4, 5, 6]
+iteration: 47, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 46, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 45, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 44, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 43, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 42, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 41, Result: [1, 0, 1, 1, 0, 1, 1, 0, 0, 0], group_0_sum: 34, group_0: [2, 5, 8, 9, 10], group_1_mul: 504, group_1: [1, 3, 4, 6, 7]
+iteration: 40, Result: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0], group_0_sum: 35, group_0: [2, 6, 8, 9, 10], group_1_mul: 420, group_1: [1, 3, 4, 5, 7]
+iteration: 39, Result: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0], group_0_sum: 35, group_0: [2, 6, 8, 9, 10], group_1_mul: 420, group_1: [1, 3, 4, 5, 7]
+iteration: 38, Result: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0], group_0_sum: 35, group_0: [2, 6, 8, 9, 10], group_1_mul: 420, group_1: [1, 3, 4, 5, 7]
+iteration: 37, Result: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0], group_0_sum: 35, group_0: [2, 6, 8, 9, 10], group_1_mul: 420, group_1: [1, 3, 4, 5, 7]
+iteration: 36, Result: [1, 0, 1, 1, 1, 0, 1, 0, 0, 0], group_0_sum: 35, group_0: [2, 6, 8, 9, 10], group_1_mul: 420, group_1: [1, 3, 4, 5, 7]
+iteration: 35, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 34, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 33, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 32, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 31, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 30, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 29, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 28, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 27, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 26, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 25, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 24, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 23, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 22, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 21, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 20, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 19, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 18, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 17, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 16, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 15, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 14, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 13, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 12, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 11, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 10, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 9, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 8, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 7, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 6, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 5, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 4, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 3, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 2, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 1, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 0, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+
+population = 50
+iteration: 49, Result: [1, 0, 1, 1, 1, 0, 0, 1, 0, 0], group_0_sum: 34, group_0: [2, 6, 7, 9, 10], group_1_mul: 480, group_1: [1, 3, 4, 5, 8]
+iteration: 48, Result: [1, 0, 1, 1, 1, 0, 0, 1, 0, 0], group_0_sum: 34, group_0: [2, 6, 7, 9, 10], group_1_mul: 480, group_1: [1, 3, 4, 5, 8]
+iteration: 47, Result: [1, 1, 0, 1, 1, 0, 0, 1, 0, 0], group_0_sum: 35, group_0: [3, 6, 7, 9, 10], group_1_mul: 320, group_1: [1, 2, 4, 5, 8]
+iteration: 46, Result: [1, 1, 0, 1, 1, 0, 0, 1, 0, 0], group_0_sum: 35, group_0: [3, 6, 7, 9, 10], group_1_mul: 320, group_1: [1, 2, 4, 5, 8]
+iteration: 45, Result: [1, 1, 0, 1, 1, 0, 0, 0, 1, 0], group_0_sum: 34, group_0: [3, 6, 7, 8, 10], group_1_mul: 360, group_1: [1, 2, 4, 5, 9]
+iteration: 44, Result: [1, 1, 0, 1, 1, 0, 0, 0, 1, 0], group_0_sum: 34, group_0: [3, 6, 7, 8, 10], group_1_mul: 360, group_1: [1, 2, 4, 5, 9]
+iteration: 43, Result: [1, 1, 0, 1, 1, 0, 0, 0, 1, 0], group_0_sum: 34, group_0: [3, 6, 7, 8, 10], group_1_mul: 360, group_1: [1, 2, 4, 5, 9]
+iteration: 42, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 41, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 40, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 39, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 38, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 37, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 36, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 35, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 34, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 33, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 32, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 31, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 30, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 29, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 28, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 27, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 26, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 25, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 24, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 23, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 22, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 21, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 20, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 19, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 18, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 17, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 16, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 15, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 14, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 13, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 12, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 11, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 10, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 9, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 8, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 7, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 6, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 5, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 4, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 3, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 2, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 1, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 0, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+
+
+population = 100
+iteration: 49, Result: [1, 1, 0, 1, 0, 1, 0, 1, 0, 0], group_0_sum: 34, group_0: [3, 5, 7, 9, 10], group_1_mul: 384, group_1: [1, 2, 4, 6, 8]
+iteration: 48, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 47, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 46, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 45, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 44, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 43, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 42, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 41, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 40, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 39, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 38, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 37, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 36, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 35, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 34, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 33, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 32, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 31, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 30, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 29, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 28, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 27, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 26, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 25, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 24, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 23, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 22, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 21, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 20, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 19, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 18, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 17, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 16, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 15, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 14, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 13, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 12, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 11, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 10, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 9, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 8, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 7, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 6, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 5, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 4, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 3, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 2, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 1, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]
+iteration: 0, Result: [1, 0, 1, 1, 1, 1, 0, 0, 0, 0], group_0_sum: 36, group_0: [2, 7, 8, 9, 10], group_1_mul: 360, group_1: [1, 3, 4, 5, 6]

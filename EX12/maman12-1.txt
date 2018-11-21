@@ -1,0 +1,61 @@
+
+Question 1:
+===========
+A.
+start position: {(3,3,0)}
+goal position: {(0,0,0), {0,0,1}}
+
+state transitions:
+    (C, M, 0) | C≥2) -> {(C-2 ,M, 1), (C-1, M, 1)}
+    (C, M, 0) | M≥2) -> {(C, M-2, 1), (C, M-1, 1)}
+    (C, M, 0) | C≥1) -> {(C-1, M, 1)}
+    (C, M, 0) | M≥1) -> {(C, M-1, 1)}
+    (C, M, 0) | M≥1 ^ C≥1) -> {(C-1, M-1, 1)}
+
+    (C, M, 1) | C≤1) -> {(C+2, M, 0), (C+1, M, 0)}
+    (C, M, 1) | M≤1) -> {(C, M+2, 0), (C, M+1, 0)}
+    (C, M, 1) | C≤2) -> {(C+1, M, 0)}
+    (C, M, 1) | M≤2) -> {(C, M+1, 0)}
+    (C, M, 1) | M≤2 ^ C≤2) -> {(C+1, M+1, 0)}
+
+B.
+breadth_first_search:
+(3, 3, 0),
+(2, 2, 1),
+(2, 3, 0),
+(0, 3, 1),
+(1, 3, 0),
+(1, 1, 1),
+(2, 2, 0),
+(2, 0, 1),
+(3, 0, 0),
+(1, 0, 1),
+(1, 1, 0),
+(0, 0, 1)
+
+Used the above state transitions to calculate successors for BFS
+
+C.
+
+            | maxint                not((m >= c or m == 0) and (3-m >= 3-c or m == 3)) # non valid state check
+h(c,m,b) =  | 2 * (m + c) + b       (m > 0) and (m != 2 or c != 2)
+            | 2 * (m + c) + b - 1   otherwise
+
+
+greedy_first_search:
+(3, 3, 0),      h(3,3,0)=12
+(2, 2, 1),      h(2,2,1)=8
+(2, 3, 0),      h(2,3,0)=10
+(0, 3, 1),      h(0,3,1)=7
+(1, 3, 0),      h(1,3,0)=8
+(1, 1, 1),      h(1,1,1)=5
+(2, 2, 0),      h(2,2,0)=7
+(2, 0, 1),      h(2,0,1)=4
+(3, 0, 0),      h(3,0,0)=5
+(1, 0, 1),      h(1,0,1)=2
+(2, 0, 0),      h(2,0,0)=3
+(0, 0, 1)       h(0,0,1)=0
+
+This greedy heuristic does find the optimal solution using Greedy-Best-First-Search, but it is not admissible because
+for some node the heuristic cost is higher then the actual one, and it's also not consistent since the values
+along the path to the goal increase and decrease. But it works!
