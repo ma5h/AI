@@ -1,0 +1,55 @@
+Question 4:
+===========
+
+A. In(x, y) ,  In(z, Office-of(z))
+----------------------------------
+{x=z}
+In(z, y) ,  In(z, Office-of(z))
+
+==> {x=z, y=Office-of(z)}
+In(z, Office-of(z)) ,  In(z, Office-of(z))
+
+
+B. In(x, x) ,  In(z, Office-of(z))
+----------------------------------
+{x=z}
+In(z, z) ,  In(z, Office-of(z))
+Can't be unified because In(z, z) requires two identical parameters but Office-of(z) not necessarily equals to z.
+
+
+C. In(x, y) ,  In(z, Office-of(w))
+----------------------------------
+{x=z}
+In(z, y) ,  In(z, Office-of(w))
+
+==> {x=z, y=Office-of(w)}
+In(z, Office-of(w)) ,  In(z, Office-of(w))
+
+
+D. P(x, B, B) ,  P(A, y, z)
+---------------------------
+{x=A}
+P(A, B, B) ,  P(A, y, z)
+
+{x=A, y=B}
+P(A, B, B) ,  P(A, B, z)
+
+==> {x=A, y=B, z=B}
+P(A, B, B) ,  P(A, B, B)
+
+
+E. P(y, y, B) ,  P(A, y, z)
+---------------------------
+{y=A}
+P(A, A, B) ,  P(A, A, z)
+
+{y=A, z=B}
+P(A, A, B) ,  P(A, A, B)
+
+
+F. P(F(x, x), A) ,  P(F(y, F(y, A)), A)
+---------------------------------------
+{x=y}
+P(F(y, y), A) ,  P(F(y, F(y, A)), A)
+
+Can't be unified because F(y, y) requires two identical parameters but F(y, A) not necessarily equals to y.

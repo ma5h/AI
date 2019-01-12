@@ -1,0 +1,72 @@
+Question 1:
+===========
+
+A.
+    i. The variables for the crossword will be the 3 words horizontal and 3 in vertical {A1, A2, A3, D1, D2, D3}
+    ii. There will be 9 variables for each crossword cell (Ai, Dj) 1≤i≤3, 1≤j≤3
+
+
+B.
+        ooooooooooooooooo                                                  ooooooooooooooooo
+        o               o                                                  o               o
+        o               o                                                  o               o
+        o      A1       o-:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:o      D1       o
+        o               o/:`                                          `-/  o               o
+        o               o ::-:-`                                    `-:::/`o               o
+        ooooooooooooooooo  ./.`-:-`                              `-::``/-  ooooooooooooooooo
+                             ::  `-:-`                         -::`  -/`
+                              ./.   `-:-`                   -::`   `/.
+                                ::     `-:-`             -::`     -/
+                                 `/.      `-:-`       -::`      `/.
+                                   ::        `-:-` -::`        ::
+                                    `/.         :++:`        `/.
+                                      -/     -::`  `-:-`    ::
+                                       `/--::`        `-:-./.
+                                       -:/+`             /+:-`
+                                    -::`  `/-          ./`  `-:-`
+        ooooooooooooooooo        -::`       -/`       ::       `-:-`       ooooooooooooooooo
+        o               o     -::`           `/-    ./`           `-:-`    o               o
+        o               o  -::`                ./` /-                `-:-` o               o
+        o      A2       o-:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:o      D2       o
+        o               o++                    -/--::                    /+o               o
+        o               o  -::.               -/`   ::               `::-` o               o
+        ooooooooooooooooo     .::.          `/-      ./`          `::-     ooooooooooooooooo
+                                 .::.      -/`         ::      .::-
+                                    .::- `/-            ./. .::.
+                                       `++-`             -++.
+                                      `/. `::-`       -::` `/.
+                                     ::      `-::``-::`      ::
+                                   `/.         `:++/`         `/.
+                                  ::        `::-`   -::.        -/
+                                ./.      .::-          .::.      `/.
+                               ::     .::-                .::.     -/`
+                             ./`   .::.                      .::-   `/-
+        ooooooooooooooooo   ::  -::.                            `::-  -/`  oooooooooooooooooo
+        o               o ./.-::`                                  `::-`/- o                o
+        o               o./::`                                        `-:/-o                o
+        o      A3       o-:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:--:o      D3        o
+        o               o                                                  o                o
+        o               o                                                  o                o
+        ooooooooooooooooo                                                  oooooooooooooooooo
+
+
+C. A unary constraint is a constraint on a single variable. For each variable the only unary constraint is that the
+value will be from the given list {add, ado, age, ...}
+
+
+D.
+a1: ['bee', 'boa', 'lee']
+a2: ['ear', 'oaf']
+a3: ['arc', 'are', 'ark', 'arm', 'art', 'eft']
+d1: ['bee', 'boa', 'lee']
+d2: ['ear', 'oaf']
+d3: ['arc', 'are', 'ark', 'arm', 'art', 'eft']
+
+E. When applying backtracking search with MRV, LCV and Arc Consistency the result will be:
+
+a1: ['boa']
+a2: ['ear']
+a3: ['eft']
+d1: ['bee']
+d2: ['oaf']
+d3: ['art']

@@ -1,0 +1,60 @@
+Question 3:
+===========
+A.
+
+(1) P ∨ Q ∨ ¬R
+(2) ¬Q ∨ R ∨ ¬S
+(3) ¬S ∨ ¬R ∨ W
+(4) R ∨ W ∨ Y ∨ Z
+(5) S
+(6) ¬W ∨ ¬S
+(7) ¬Y ∨ ¬Z
+
+pure symbol on P=True
+(1) Q ∨ ¬R
+(2) ¬Q ∨ R ∨ ¬S
+(3) ¬S ∨ ¬R ∨ W
+(4) R ∨ W ∨ Y ∨ Z
+(5) S
+(6) ¬W ∨ ¬S
+(7) ¬Y ∨ ¬Z
+
+unit clause on (5) S=True
+(1) Q ∨ ¬R
+(2) ¬Q ∨ R
+(3) ¬R ∨ W
+(4) R ∨ W ∨ Y ∨ Z
+(6) ¬W
+(7) ¬Y ∨ ¬Z
+
+unit clause on (6) W=False
+(1) Q ∨ ¬R
+(2) ¬Q ∨ R
+(3) ¬R
+(4) R ∨ Y ∨ Z
+(7) ¬Y ∨ ¬Z
+
+unit clause on (3) R=False
+(2) ¬Q
+(4) Y ∨ Z
+(7) ¬Y ∨ ¬Z
+
+pure symbol on Q=False
+(4) Y ∨ Z
+(7) ¬Y ∨ ¬Z
+
+
+B.
+In the question there are 7 variables, each variable has two possible assignments (True, False), this creates 2^7=128
+possible states. After applying pure-symbol and unit-clause heuristics the problem narrowed down to 2 variables and
+that is 2^2=4 possible states. This saved 124 states to check.
+
+For a general problem we can conclude that the entire sentence is unsatisfiable and save all the checks, for example:
+(1) S
+(2) ¬S
+After applying unit-clause we will get an empty clause and this will mean that it's not satisfiable in any model.
+
+And on the other hand these heuristics may not be able to help at all, for example:
+(1) S ∨ R
+(2) ¬R ∨ Q
+(2) ¬S ∨ ¬Q

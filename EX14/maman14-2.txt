@@ -1,0 +1,55 @@
+Question 2:
+===========
+A.
+Room(x) - x is in the room
+Married(x) - x is married
+Look(x, y) - x is looking at y
+
+KB =
+(1)         Room(A)
+(2)         Room(B)
+(3)         Room(C)
+(4)         Married(A)
+(5)         ¬Married(C)
+(6)         Look(A, B)
+(7)         Look(B, C)
+
+B.
+Conclude using resolution that a married person is looking at non-married person.
+This translates to:
+        α ≡ ∃(x, y) Look(x, y) ∧ Married(x) ∧ ¬Married(y) ∧ Room(x) ∧ Room(y)
+
+Prove BK ⊨ α by showing that BK ^ ¬α is unsatisfiable:
+
+        ¬α ≡ ¬∃(x, y) Look(x, y) ∧ Married(x) ∧ ¬Married(y) ∧ Room(x) ∧ Room(y)
+(8)          ∀(x, y) ¬Look(x, y) ∨ ¬Married(x) ∨ Married(y) ∨ ¬Room(x) ∨ ¬Room(y)
+
+
+(1)+(8)     Room(A) ∧ ∀(x, y) ¬Look(x, y) ∨ ¬Married(x) ∨ Married(y) ∨ ¬Room(x) ∨ ¬Room(y)      {x/A}
+(9)         ¬Look(A, y) ∨ ¬Married(A) ∨ Married(y) ∨ ¬Room(y)
+
+(4)+(9)     Married(A) ∧ (¬Look(A, y) ∨ ¬Married(A) ∨ Married(y) ∨ ¬Room(y))
+(10)        ¬Look(A, y) ∨ Married(y) ∨ ¬Room(y)
+
+(6)+(10)    Look(A, B) ∧ (¬Look(A, y) ∨ Married(y) ∨ ¬Room(y))                                  {y/B}
+(11)        Married(B) ∨ ¬Room(B)
+
+(2)+(11)    Room(B) ∧ (Married(B) ∨ ¬Room(B))
+(12)        Married(B)
+
+
+(2)+(8)     Room(B) ∧ ∀(x, y) ¬Look(x, y) ∨ ¬Married(x) ∨ Married(y) ∨ ¬Room(x) ∨ ¬Room(y)      {x/B}
+(13)        ¬Look(B, y) ∨ ¬Married(B) ∨ Married(y) ∨ ¬Room(y)
+
+(5)+(13)    ¬Married(C) ∧ (¬Look(B, y) ∨ ¬Married(B) ∨ Married(y) ∨ ¬Room(y))                   {y/C}
+(14)        ¬Look(B, C) ∨ ¬Married(B) ∨ ¬Room(C)
+
+(7)+(14)    Look(B, C) ∧ (¬Look(B, C) ∨ ¬Married(B) ∨ ¬Room(C))
+(15)        ¬Married(B) ∨ ¬Room(C)
+
+(3)+(15)    Room(C) ∧ (¬Married(B) ∨ ¬Room(C))
+(16)        ¬Married(B)
+
+(12)+(16)   Married(B) ∧ ¬Married(B)
+
+BK ^ ¬α is unsatisfiable therefore α is correct.

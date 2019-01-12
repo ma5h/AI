@@ -1,0 +1,282 @@
+Question 5:
+===========
+
+K(x) - x is Dan's killer
+F(x) - x is Dan's friend
+H(x) - x is dan's hater
+S(x) - x have seen Dan before his tragic death
+
+================================
+There is only one killer:
+================================
+
+K(guy) → ¬K(dudi) ∧ ¬K(ofer)
+K(dudi) → ¬K(guy) ∧ ¬K(ofer)
+K(ofer) → ¬K(dudi) ∧ ¬K(guy)
+
+==============================>
+
+¬K(guy) ∨ (¬K(dudi) ∧ ¬K(ofer))
+¬K(dudi) ∨ (¬K(guy) ∧ ¬K(ofer))
+¬K(ofer) ∨ (¬K(dudi) ∧ ¬K(guy))
+
+===============================>
+
+¬K(guy) ∨ ¬K(dudi)
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(dudi) ∨ ¬K(guy)
+¬K(dudi) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(dudi)
+¬K(ofer) ∨ ¬K(guy))
+
+================================
+Knowledge Base
+================================
+
+¬K(guy) → F(dudi) ∧ H(ofer)
+¬K(dudi) → ¬S(dudi) ∧ ¬F(dudi)
+¬K(ofer) → S(guy) ∧ S(dudi)
+
+===============================
+
+K(guy) ∨ (F(dudi) ∧ H(ofer))
+K(dudi) ∨ (¬S(dudi) ∧ ¬F(dudi))
+K(ofer) ∨ (S(guy) ∧ S(dudi))
+
+===============================
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+K(dudi) ∨ ¬S(dudi)
+K(dudi) ∨ ¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================================
+=================================
+
+Let's prove that Guy is innocent
+
+α = ¬K(guy)
+
+================
+KB ∧ ¬α
+================
+K(guy)                              Unit clause heuristic
+
+¬K(guy) ∨ ¬K(dudi)
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(dudi) ∨ ¬K(guy)
+¬K(dudi) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(dudi)
+¬K(ofer) ∨ ¬K(guy))
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+K(dudi) ∨ ¬S(dudi)
+K(dudi) ∨ ¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(dudi)                            Unit clause heuristic
+¬K(ofer)
+
+¬K(dudi) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(dudi)
+
+K(dudi) ∨ ¬S(dudi)
+K(dudi) ∨ ¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+==================
+
+¬K(ofer)                            Unit clause heuristic
+
+¬S(dudi)
+¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+==================
+
+¬S(dudi)
+¬F(dudi)                            Unit clause heuristic
+
+S(guy)                              Unit clause heuristic
+S(dudi)
+
+==================
+
+¬S(dudi)
+S(dudi)
+
+==================
+
+¬S(dudi) ∧ S(dudi) is unsatisfiable therefore Guy is innocent
+
+
+=================================
+=================================
+
+Let's prove that Dudi is innocent
+
+α = ¬K(dudi)
+
+================
+KB ∧ ¬α
+================
+K(dudi)                              Unit clause heuristic
+
+¬K(guy) ∨ ¬K(dudi)
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(dudi) ∨ ¬K(guy)
+¬K(dudi) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(dudi)
+¬K(ofer) ∨ ¬K(guy)
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+K(dudi) ∨ ¬S(dudi)
+K(dudi) ∨ ¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(guy)                         Unit clause heuristic
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(guy)
+¬K(ofer)
+
+¬K(ofer)
+¬K(ofer) ∨ ¬K(guy)
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(ofer)                         Unit clause heuristic
+
+F(dudi)
+H(ofer)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+F(dudi)
+H(ofer)
+
+S(guy)
+S(dudi)
+
+=================
+
+We find no contradiction - there is a model that satisfies the sentence (KB ∧ ¬α) and hence we cannot entail the query α
+
+=================================
+=================================
+
+Let's prove that Dudi is guilty
+
+α = K(dudi)
+
+================
+KB ∧ ¬α
+================
+¬K(dudi)                              Unit clause heuristic
+
+¬K(guy) ∨ ¬K(dudi)
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(dudi) ∨ ¬K(guy)
+¬K(dudi) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(dudi)
+¬K(ofer) ∨ ¬K(guy)
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+K(dudi) ∨ ¬S(dudi)
+K(dudi) ∨ ¬F(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(guy)
+
+K(guy) ∨ F(dudi)
+K(guy) ∨ H(ofer)
+
+¬S(dudi)
+¬F(dudi)                          Unit clause heuristic
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(guy) ∨ ¬K(ofer)
+
+¬K(ofer) ∨ ¬K(guy)
+
+K(guy)                            Unit clause heuristic
+K(guy) ∨ H(ofer)
+
+¬S(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬K(ofer)                            Unit clause heuristic
+
+¬S(dudi)
+
+K(ofer) ∨ S(guy)
+K(ofer) ∨ S(dudi)
+
+=================
+
+¬S(dudi)
+S(guy)                          Unit clause heuristic
+S(dudi)
+
+=================
+
+¬S(dudi)
+S(dudi)
+
+=================
+
+¬S(dudi) ∧ S(dudi) is unsatisfiable therefore Dudi is the killer!!
