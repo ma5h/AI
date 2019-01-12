@@ -1,0 +1,44 @@
+
+Question 2:
+===========
+
+Initial State:
+    In(Switch1, Room1) ∧ In(Door1, Room1) ∧ In(Door1, Corridor) In(Switch1, Room2) ∧ 
+    In(Door2, Room2) ∧ In(Door2, Corridor) In(Switch1, Room3) ∧ In(Door3, Room3) ∧ 
+    In(Door3, Corridor) In(Switch1, Room4) ∧ In(Door4, Room4) ∧ In(Door4, Corridor) In(Shakey, Room3) ∧ 
+    At(Shakey, XS) In(Box1, Room1) ∧ In(Box2, Room1) ∧ In(Box3, Room1) ∧ In(Box4, Room1) Climbable(Box1) ∧ 
+    Climbable(Box2) ∧ Climbable(Box3) ∧ Climbable(Box4) Pushable(Box1) ∧ Pushable(Box2) ∧ Pushable(Box3) ∧ 
+    Pushable(Box4) At(Box1, X1) ∧ At(Box2, X2) ∧ At(Box3, X3) ∧ At(Box4, X4) TurnwdOn(Switch1) ∧ TurnedOn(Switch4)
+
+Actions:
+    Action(ACTION:Go(x, y), 
+        PreCondition:At(Shakey, x) ∧ In(x, r) ∧ In(y, r), 
+        Result:At(Shakey, y) ∧ ¬(At(Shakey, x))
+    )
+    Action(ACTION:Push(b, x, y), 
+        PreCondition:At(Shakey, x) ∧ P ushable(b), 
+        Result:At(b, y) ∧ At(Shakey, y) ∧ ¬At(b, x) ∧ ¬At(Shakey, x)
+    )
+    Action(ACTION:ClimbUp(b), 
+        PreCondition:At(Shakey, x) ∧ At(b, x) ∧ Climbable(b), 
+        Result:On(Shakey, b) ∧ ¬On(Shakey, F loor)
+    )
+    Action(ACTION:ClimbDown(b), 
+        PreCondition:On(Shakey, b), 
+        Result:On(Shakey, F loor) ∧ ¬On(Shakey, b)
+    )
+    Action(ACTION:T urnOn(l), 
+        PreCondition:On(Shakey, b) ∧ At(Shakey, x) ∧ At(l, x), 
+        Result:T urnedOn(l)
+    )
+    Action(ACTION:T urnOf f (l), 
+        PreCondition:On(Shakey, b) ∧ At(Shakey, x) ∧ At(l, x), 
+        Result:¬T urnedOn(l)
+    )
+
+Plan:
+    Go(XS,Door3)
+    Go(Door3, Door1) Go(Door1,X2)
+    Push(Box2, X2, Door1)
+    Push(Box2, Door1, Door2)
+    Push(Box2,Door2,Switch2)

@@ -1,0 +1,41 @@
+
+Question 1:
+===========
+a. The initial state is:
+At(Monkey,A) ∧ At(Bananas,B) ∧ At(Box,C) ∧ Height(Monkey, Low) ∧ Height(Box, Low) ∧ Height(Bananas, High) ∧ Climbable(Box)
+
+b. The actions are:
+    Action(ACTION:Go(x, y),
+        PreCondition:At(Monkey, x),
+        Result:At(Monkey, y) ∧ ¬(At(Monkey, x))
+    )
+
+    Action(ACTION:ClimbUp(b),
+        PreCondition:At(Monkey, x) ∧ At(b, x) ∧ Climbable(b),
+        Result:On(Monkey, b) ∧ ¬Height(Monkey, High)
+    )
+
+    Action(ACTION:Grasp(b),
+        PreCondition:Height(Monkey, h) ∧ Height(b, h) ∧ At(M onkey, x) ∧ At(b, x),
+        Result:Have(Monkey, b)
+    )
+    Action(ACTION:ClimbDown(b),
+        PreCondition:On(Monkey, b) ∧ Height(Monkey, High),
+        Result:¬On(Monkey, b) ∧ ¬Height(Monkey, High) ∧ Height(Monkey,Low)
+    )
+    Action(ACTION:UnGrasp(b),
+        PreCondition:Have(Monkey, b),
+        Result:¬Have(Monkey, b)
+    )
+
+c.
+There is no way to represent the fact that there must be some relation between two states within the plan because
+in Classic Planning we only discuss the goal state.
+So there is no way to represent this goal.
+
+d.
+Add to the initial state:
+    Pushable(Box)
+
+Add to actions:
+    Action(ACTION:Push(b,x,y), PreCondition:At(Monkey,x) ∧ Pushable(b), Result:At(b, y) ∧ At(Monkey, y) ∧ ¬At(b, x) ∧ ¬At(Monkey, x))

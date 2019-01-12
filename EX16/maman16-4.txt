@@ -1,0 +1,107 @@
+
+Question 4:
+===========
+
+Let's check if A⫫B?
+
+    __________________________
+    |  A  |  B  |   P(A,B)   |
+    |_____|_____|____________|
+    |  F  |  F  |    0.25    |
+    |  F  |  T  |    0.25    |
+    |  T  |  F  |    0.25    |
+    |  T  |  T  |    0.25    |
+    |_____|_____|____________|
+    ____________________
+    |  A  |    P(A)    |
+    |_____|____________|
+    |  F  |    0.5     |
+    |  T  |    0.5     |
+    |_____|____________|
+    ____________________
+    |  B  |    P(B)    |
+    |_____|____________|
+    |  F  |    0.5     |
+    |  T  |    0.5     |
+    |_____|____________|
+    __________________________
+    |  A  |  B  |  P(A)P(B)  |
+    |_____|_____|____________|
+    |  F  |  F  |    0.25    |
+    |  F  |  T  |    0.25    |
+    |  T  |  F  |    0.25    |
+    |  T  |  T  |    0.25    |
+    |_____|_____|____________|
+
+From the calculation we can see that P(A,B)=P(A)P(B) therefore A⫫B. All the Bayesian nets that have arrow
+from A to B or B to A are disqualified: 2, 4, 5, 6. We are left with options 1 and 3.
+
+Let's check if B⫫C?
+
+    __________________________
+    |  B  |  C  |   P(B,C)   |
+    |_____|_____|____________|
+    |  F  |  F  |    0.25    |
+    |  F  |  T  |    0.2     |
+    |  T  |  F  |     0      |
+    |  T  |  T  |    0.5     |
+    |_____|_____|____________|
+    ____________________
+    |  B  |    P(B)    |
+    |_____|____________|
+    |  F  |    0.5     |
+    |  T  |    0.5     |
+    |_____|____________|
+    ____________________
+    |  C  |    P(C)    |
+    |_____|____________|
+    |  F  |    0.3     |
+    |  T  |    0.7     |
+    |_____|____________|
+    __________________________
+    |  B  |  C  |  P(B)P(C)  |
+    |_____|_____|____________|
+    |  F  |  F  |    0.15    |
+    |  F  |  T  |    0.35    |
+    |  T  |  F  |    0.15    |
+    |  T  |  T  |    0.35    |
+    |_____|_____|____________|
+
+From the calculation we can see that P(B,C)≠P(B)P(C) therefore B depend on C. The Bayesian net of option 1 doesn't
+have arrow from B to C and therefor disqualified. We are left with option 3.
+
+Let's check if A⫫C?
+
+    __________________________
+    |  A  |  C  |   P(A,C)   |
+    |_____|_____|____________|
+    |  F  |  F  |    0.15    |
+    |  F  |  T  |    0.35    |
+    |  T  |  F  |    0.15    |
+    |  T  |  T  |    0.35    |
+    |_____|_____|____________|
+    ____________________
+    |  A  |    P(A)    |
+    |_____|____________|
+    |  F  |    0.5     |
+    |  T  |    0.5     |
+    |_____|____________|
+    ____________________
+    |  C  |    P(C)    |
+    |_____|____________|
+    |  F  |    0.3     |
+    |  T  |    0.7     |
+    |_____|____________|
+    __________________________
+    |  A  |  C  |  P(A)P(C)  |
+    |_____|_____|____________|
+    |  F  |  F  |    0.15    |
+    |  F  |  T  |    0.35    |
+    |  T  |  F  |    0.15    |
+    |  T  |  T  |    0.35    |
+    |_____|_____|____________|
+
+From the calculation we can see that P(A,C)=P(A)P(C) therefore A⫫C. In option 3 there isn't an arrow
+from A to C therefore this Bayesian net corresponds with the given probability table.
+
+Answer: option 3.

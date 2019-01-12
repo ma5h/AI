@@ -1,0 +1,67 @@
+
+Question 3:
+===========
+a.
+    P(G|M) = P(M|G)P(G)\P(M) = 0.0667\(0.0667+0.25+0.9) = 0.22866
+
+
+b.
+    1. From the Bayesian net and the chain rule we get:
+    P(G, M, B, C) = P(G)P(M|G)P(B|M)P(C|M) = 0.1*0.667*0.4*0.25 = 0.00667
+
+
+
+    2. P(G|¬C) = P(G,¬C)\P(¬C) = P(¬C|G)P(G)\P(¬C)
+
+    Using chain rule while G is given
+    P(¬C|G) = P(¬C|G,M)P(M|G) + P(¬C|G,¬M)P(¬M|G)
+
+    From the Bayesian net we can conclude that C ⫫ G | M, therefore:
+    P(¬C|G) = P(¬C|G,M)P(M|G) + P(¬C|G,¬M)P(¬M|G) = P(¬C|M)P(M|G) + P(¬C|¬M)P(¬M|G)
+            = 0.75*0.667+0.5*0.333 = 0.66675
+
+
+    P(M) = P(M|G)P(G) + P(M|¬G)P(¬G) = 0.667*0.1+0.25*0.9=0.2917
+    P(¬C) = P(¬C|M)P(M) + P(¬C|¬M)P(¬M) = 0.75*0.2917+0.5*(1-0.2917)=0.572925
+
+    P(G|¬C) = P(G,¬C)\P(¬C) = P(¬C|G)P(G)\P(¬C) = 0.66675*0.1\0.572925=0.11637
+
+When Class attendance reduced that indicates that Marijuana was legalized ( because P(C|M) < P(C|¬M) ),
+and if Marijuana was legalized that indicates that the Green party was elected ( because P(M|G) > P(M|¬G) ) therefore
+Class attendance reduction implies higher probability for the Green party to get elected and that is what is seen in
+the result:  P(G|¬C) > P(G).
+
+
+c.
+    1.
+        G       S
+         |     |
+          |   |
+           | |
+            |
+            ⌄
+            M
+            |
+           | |
+          |   |
+         |     |
+         ⌄     ⌄
+         B     C
+
+A new node S is pointing at M
+
+
+    2. The CPT of M will change:
+    __________________________
+    |  G  |  S  |  P(M|G,S)  |
+    |_____|_____|____________|
+
+
+    3.
+    a. P(B,C)=P(B)P(C), B ⫫ C is not guaranteed since there is an active triple B-M-C. Statement is false.
+    b. P(B)=P(B|G), B ⫫ G is not guaranteed since there is an active triple G-M-B. Statement is false.
+    c. P(G)=P(G|S), G ⫫ S since there are no active paths. Statement is true.
+    d. P(C|G,M)=P(C|G), C ⫫ M|G is not guaranteed since there is an active path M-C. Statement is false.
+    e. P(G|S,M)=P(G|S), G ⫫ M|S is not guaranteed since there is an active path G-M. Statement is false.
+    f. P(G|S,B)=P(G|S), G ⫫ B|S is not guaranteed since there is an active triple G-M-B. Statement is false.
+    g. P(B|C,G)=P(B|C), B ⫫ G|C is not guaranteed since there is an active triple G-M-B. Statement is false.
