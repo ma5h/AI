@@ -1,0 +1,132 @@
+
+Question 2:
+===========
+a.
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P           FALSE	FALSE	FALSE	TRUE	TRUE	| ex1
+P	        FALSE	TRUE	TRUE	FALSE	FALSE	| ex2
+P	        FALSE	TRUE	FALSE	FALSE	TRUE	| ex3
+P	        TRUE	FALSE	TRUE	FALSE	TRUE	| ex4
+N	        FALSE	FALSE	FALSE	TRUE	FALSE	| ex5
+N	        TRUE	TRUE	FALSE	TRUE	TRUE	| ex6
+N	        TRUE	TRUE	TRUE	TRUE	FALSE	| ex7
+
+ChooseAttribute({F1, F2, F3, F4, F5}, {ex1, ex2, ex3, ex4, ex5, ex6, ex7}) :
+H(Class) = -(4/7 log 4/7) - (3/7 log 3/7) = 0.985
+H(Class | F1) = 4/7 H(0.25, 0.75) + 3/7 H(1/3, 2/3) = 0.85714
+H(Class | F2) = 4/7 H(0.25, 0.75) + 3/7 H(1, 0) = 0.4636
+H(Class | F3) = 3/7 H(1/3, 2/3) + 4/7 H(0.5, 0.5) = 0.965
+H(Class | F4) = 4/7 H(0.5, 0.5) + 3/7 H(1/3, 2/3) = 0.965
+H(Class | F5) = 3/7 H(1/3, 2/3) + 4/7 H(0.25, 0.75) = 0.85714
+
+I(Class; F1) = H(Class) - H(Class | F1) = 0.985 - 0.85714 = 0.12786
+I(Class; F2) = H(Class) - H(Class | F2) = 0.985 - 0.4636 = 0.5214 <--- tree root
+I(Class; F3) = H(Class) - H(Class | F3) = 0.985 - 0.965 = 0.02
+I(Class; F4) = H(Class) - H(Class | F4) = 0.985 - 0.965 = 0.02
+I(Class; F5) = H(Class) - H(Class | F5) = 0.985 - 0.85714 = 0.12786
+
+for value F2 = true
+===================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P           FALSE	FALSE	FALSE	TRUE    TRUE	| ex1
+N	        FALSE	FALSE	FALSE	TRUE    FALSE	| ex5
+N	        TRUE	TRUE	FALSE	TRUE    TRUE	| ex6
+N	        TRUE	TRUE	TRUE	TRUE    FALSE	| ex7
+
+ChooseAttribute({F1, F3, F4, F5}, {ex1, ex5, ex6, ex7}) :
+H(Class) = -(0.25 log 0.25) - (0.75 log 0.75) = 0.811278
+H(Class | F1) = 0.5 H(0.5, 0.5) + 0.5 H(1, 0) = 0.5
+H(Class | F3) = 0.25 H(1, 0) + 0.75 H(1/3, 2/3) = 0.6887
+H(Class | F4) = 0.5 H(1, 0) + 0.5 H(0.5, 0.5) = 0.5
+H(Class | F5) = 0.5 H(1, 0) + 0.5 H(0.5, 0.5) = 0.5
+
+I(Class; F1) = H(Class) - H(Class | F1) = 0.811278 - 0.5 = 0.311278 <--- node under F2:true
+I(Class; F3) = H(Class) - H(Class | F3) = 0.811278 - 0.6887 = 0.122578
+I(Class; F4) = H(Class) - H(Class | F4) = 0.811278 - 0.5 = 0.311278
+I(Class; F5) = H(Class) - H(Class | F5) = 0.811278 - 0.5 = 0.311278
+
+
+for value F1 = true
+===================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P           FALSE	FALSE	FALSE	TRUE    TRUE	| ex1
+N	        TRUE	TRUE	FALSE	TRUE    TRUE	| ex6
+
+ChooseAttribute({F3, F4, F5}, {ex1, ex6}) :
+H(Class) = -(0.5 log 0.5) - (0.5 log 0.5) = 1
+H(Class | F3) = 0 + 1 H(0.5, 0.5) = 1
+H(Class | F4) = 0.5 H(1, 0) + 0.5 H(1, 0) = 0
+H(Class | F5) = 0.5 H(1, 0) + 0.5 H(1, 0) = 0
+
+I(Class; F3) = H(Class) - H(Class | F3) = 1 - 1 = 0
+I(Class; F4) = H(Class) - H(Class | F4) = 1 - 0 = 1 <--- node under F1:true
+I(Class; F5) = H(Class) - H(Class | F5) = 1 - 0 = 1
+
+for value F4 = true
+===================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+N	        TRUE	TRUE	FALSE	TRUE    TRUE	| ex6
+
+all examples have the same classification : return N
+
+for value F4 = false
+====================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P           FALSE	FALSE	FALSE	TRUE    TRUE	| ex1
+
+all examples have the same classification : return P
+
+
+for value F1 = false
+====================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+N	        FALSE	FALSE	FALSE	TRUE    FALSE	| ex5
+N	        TRUE	TRUE	TRUE	TRUE    FALSE	| ex7
+
+all examples have the same classification : return N
+
+for value F2 = false
+====================
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P	        FALSE	TRUE	TRUE	FALSE	FALSE	| ex2
+P	        FALSE	TRUE	FALSE	FALSE	TRUE	| ex3
+P	        TRUE	FALSE	TRUE	FALSE	TRUE	| ex4
+
+all examples have the same classification : return P
+
+
+
+                        F2
+                 |--------------|
+               true           false
+                 |              |
+                 F1             P
+         |--------------|
+       true           false
+         |              |
+         F4             N
+         |
+       true
+  |--------------|
+  N              P
+
+
+b.
+
+class       F5      F4      F3      F2      F1
+----------------------------------------------------|--
+P           TRUE	TRUE	FALSE	FALSE	FALSE	| ex8
